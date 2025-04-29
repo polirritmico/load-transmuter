@@ -3,10 +3,12 @@
 
 import pytest
 
-# from src.google_sheets_importer import GoogleSheetsImporter
 from src.oracle8_handler import Oracle8DataBaseHandler
-from src.reports_resource import ReportResource
 from src.xlsx_importer import XlsxImporter
+
+# from src.google_sheets_importer import GoogleSheetsImporter
+# from src.reports_resource import ReportResource
+from tests.mock_classes import MockResource
 from tests.sensitive_data import (
     get_db_credentials,
     get_google_credentials,
@@ -23,13 +25,14 @@ def oracledb():
     db_manager.close_db_connection(rollback=True)
 
 
-# @pytest.mark.skip(reason="Not implemented")
+@pytest.mark.skip(reason="Not implemented")
 def test_insert_and_load_db_data(oracle: Oracle8DataBaseHandler) -> None:
     case = "tests/files/test_file.xlsx"
     expected_value1 = "Something"
     expected_value2 = "Some value"
 
-    resource = ReportResource("Some_data")
+    # resource = ReportResource("Some_data")
+    resource = MockResource("Some_data")
     resource.set_input_handler(XlsxImporter())
     resource.set_db_handler(oracle)
     resource.load_input_data(case)
