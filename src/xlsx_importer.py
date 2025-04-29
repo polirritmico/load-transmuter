@@ -16,7 +16,7 @@ class XlsxImporter:
 
         _types = "object" if types is None else types
         try:
-            data = read_excel(
+            data: DataFrame = read_excel(
                 source,
                 sheet_name=section,
                 header=0,
