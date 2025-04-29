@@ -1,9 +1,9 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from typing import Protocol
+from typing import Dict, Protocol
 
-from pandas import DataFrame, Dict
+from pandas import DataFrame
 
 
 class DataBaseHandler(Protocol):
