@@ -17,7 +17,7 @@ class DataBaseHandler(Protocol):
     and basic resource data operations.
     """
 
-    def set_credentials(self, **kargs) -> None:
+    def set_credentials(self, **credentials) -> None:
         """Store all necessary credentials to establish a DB connection.
 
         Should be executed before `connect_with_DB`.
@@ -57,13 +57,13 @@ class ImporterHandler(Protocol):
     def load_data(
         self,
         source: str | bytes,
-        sheet_name: int | str,
+        section: int | str | None = None,
         types: Dict | None = None,
     ) -> DataFrame:
         """Load data from an external file.
 
         :param source: The source filename/url or file content as bytes to load.
-        :param sheet_name: The sheet or section name/index to read from.
+        :param section: Optional section name or index to read inside the data.
         :param types: Optional expected type definitions for columns.
         :return: The loaded data as a DataFrame.
         """
@@ -81,20 +81,20 @@ class ResourceHandler(Protocol):
         DataBaseHandler
     """
 
-    input_data: DataFrame
-    db_data: DataFrame
     data_importer: ImporterHandler
+    db_data: DataFrame
     db_handler: DataBaseHandler
-    sheet_name: str | int
-    validated_data: bool = False
     expected_input_data_format: dict[str, type]
-    required_columns: list[str]
+    input_data: DataFrame
+    required_fields: list[str]
     resource_name: str
+    section: int | str | None
+    validated_data: bool = False
 
-    def __init__(self, resource_sheet_name: str):
+    def __init__(self, section: str):
         """Constructor method
 
-        :param resource_sheet_name: The default expected name of the resource in the datasheet.
+        :param section: The default expected name of the resource in the datas source.
         """
         ...
 
