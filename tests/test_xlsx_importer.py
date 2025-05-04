@@ -17,7 +17,7 @@ def xlsx_importer():
 
 
 def test_xlsx_importer_read_sheet(xlsx_importer: XlsxImporter) -> None:
-    case_filename = TEST_FILES / "simple.xlsx"
+    case_filename = str(TEST_FILES / "simple.xlsx")
     case_section = "Some_datatypes"
     expected = "This is working"
 
