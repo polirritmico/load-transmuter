@@ -6,7 +6,7 @@ import json
 import os
 import pathlib
 
-SECRETS_DIR: pathlib.Path = pathlib.Path("./secrets")
+SECRETS_DIR: pathlib.Path = pathlib.Path("tests/.secrets")
 
 
 def get_db_credentials() -> dict[str, str | None]:

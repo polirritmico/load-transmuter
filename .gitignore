@@ -172,3 +172,11 @@ cython_debug/
 
 # PyPI configuration file
 .pypirc
+
+# Credentials and secret files
+!.secrets/
+!tests/.secrets/
+.secrets/*.json
+tests/.secrets/*.json
+!.secrets/template_*.json
+!tests/.secrets/template_*.json
