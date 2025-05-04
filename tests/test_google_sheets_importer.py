@@ -20,7 +20,7 @@ def test_google_sheets_importer(gsheets: GoogleSheetsImporter) -> None:
     case_section = "Some_datatypes"
 
     case_col_str = "target_col"
-    expected_str = "This is working"
+    expected_str = "This is working!"
     case_col_val = "left_col"
     expected_val = 123.456
 
