@@ -48,7 +48,7 @@ def get_google_credentials() -> dict[str, str] | str:
     :return: A dict with the google credentials.
     """
     if not os.environ.get("CI"):
-        return SECRETS_DIR / "google_credentials.json"
+        return str(SECRETS_DIR / "google_credentials.json")
 
     # The key need to be decoded (cause is a multiline string).
     # Steps to decode:
