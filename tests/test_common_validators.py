@@ -31,7 +31,7 @@ def test_validate_extra_spaces() -> None:
     case_section = "trailing_space"
     expected = (
         "Detected 1 problem(s):\n"
-        "- Invalid last char: 'Trailing_space ' in column 'col_with_error' row '4'"
+        "- Invalid last char: 'Trailing_space ' in column 'col_with_error' row '4'."
     )
 
     resource = MockResource("mock")

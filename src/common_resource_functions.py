@@ -83,8 +83,10 @@ class CommonResourceFunctions:
         if first_char in invalid_first_and_last_chars:
             human_row = int(index) + 2  # + 1 for 0-idx and + 1 for header row
             return (
-                f"Invalid first char: '{value}' in column '{label}' row '{human_row}'"
+                f"Invalid first char: '{value}' in column '{label}' row '{human_row}'."
             )
         if last_char in invalid_first_and_last_chars:
             human_row = int(index) + 2  # + 1 for 0-idx and + 1 for header row
-            return f"Invalid last char: '{value}' in column '{label}' row '{human_row}'"
+            return (
+                f"Invalid last char: '{value}' in column '{label}' row '{human_row}'."
+            )
