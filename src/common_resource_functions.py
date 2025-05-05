@@ -59,7 +59,7 @@ class CommonResourceFunctions:
 
         for validator in [
             self.search_invalid_characters,
-            self.validate_first_and_last_chars,
+            self.validate_first_and_last_characters,
         ]:
             invalid_characters = validator(label, index, value)
             if invalid_characters:
@@ -73,7 +73,7 @@ class CommonResourceFunctions:
             human_row = int(index) + 2  # + 1 for 0-idx and + 1 for header row
             return f"Invalid character in column '{label}' row '{human_row}'."
 
-    def validate_first_and_last_chars(
+    def validate_first_and_last_characters(
         self, label: str, index: int, value: str
     ) -> str | None:
         invalid_first_and_last_chars = [" ", "\n"]
