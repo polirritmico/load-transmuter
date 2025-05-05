@@ -77,8 +77,26 @@ class ResourceHandler(Protocol):
     These classes manage loading, validating, and transferring data between
     external sources and the database.
 
-    See Also:
-        DataBaseHandler
+    See Also: DataBaseHandler
+
+    Fields:
+
+    :param data_importer: The ImporterHandler used by import operations.
+    :type data_importer: ImporterHandler
+    :param db_data: The generated DataFrame from the DB data.
+    :type db_data: DataFrame
+    :param expected_input_data_format: Column/field name and the expected type.
+    :type expected_input_data_format: dict: str, type
+    :param input_data: The DataFrame from the input data source.
+    :type input_data: DataFrame
+    :param required_fields: A list of mandatory columns without empty data.
+    :type required_fields: list: str
+    :param resource_name: The filename, url, api, etc. of the input data source.
+    :type resource_name: str
+    :param section: Name or index of the section with the data inside the resource.
+    :type section: int, str, None
+    :param validated_data: state of the data validation. Defaults to False.
+    :type validated_data: bool
     """
 
     data_importer: ImporterHandler
