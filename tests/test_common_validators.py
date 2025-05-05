@@ -7,6 +7,25 @@ from src.common_resource_functions import CommonResourceFunctions
 from src.xlsx_importer import XlsxImporter
 from tests.mock_classes import MockResource
 
+TEST_FILE: str = "tests/files/common_validations.xlsx"
+
+
+def test_validate_bad_characters() -> None:
+    case_section = "bad_character"
+    expected = "Detected 1 problem(s):\n- Invalid character in column 'col_c' row '2'."
+
+    importer = XlsxImporter()
+    resource = MockResource("mock")
+    resource.section = case_section
+    validator = CommonResourceFunctions(resource)
+    importer = XlsxImporter()
+    resource.input_data = importer.load_data(TEST_FILE, case_section)
+    with pytest.raises(ValueError) as error:
+        validator.run_common_validations()
+
+    output = error.value.args[0]
+    assert expected == output
+
 
 def test_validate_extra_spaces() -> None:
     case_section = "trailing_space"
