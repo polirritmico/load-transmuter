@@ -44,3 +44,23 @@ def test_validate_extra_spaces() -> None:
 
     output = error.value.args[0]
     assert expected == output
+
+
+def test_validate_multiple_problems() -> None:
+    case_section = "multiple_problems"
+    expected = (
+        "Detected 2 problem(s):\n"
+        "- Invalid character in column 'col_a' row '2'.\n"
+        "- Invalid last char: 'Trailing_space ' in column 'col_b' row '3'."
+    )
+
+    resource = MockResource("mock")
+    resource.section = case_section
+    validator = CommonResourceFunctions(resource)
+    importer = XlsxImporter()
+    resource.input_data = importer.load_data(TEST_FILE, case_section)
+    with pytest.raises(ValueError) as error:
+        validator.run_common_validations()
+
+    output = error.value.args[0]
+    assert expected == output
