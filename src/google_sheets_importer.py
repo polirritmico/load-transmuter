@@ -14,7 +14,7 @@ class GoogleSheetsImporter:
 
     def __init__(self, credentials: dict | str | None):
         if not credentials:
-            credentials = self.DEFAULT_CREDENTIALS
+            credentials = str(self.DEFAULT_CREDENTIALS)
 
         if isinstance(credentials, str):
             try:
