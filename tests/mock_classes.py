@@ -33,9 +33,9 @@ class MockResource:
     data_importer: ImporterHandler
     db_data: DataFrame
     db_handler: DataBaseHandler
-    expected_input_data_format: dict[str, type]
+    expected_input_data_format: dict[str, type] = {}
     input_data: DataFrame
-    required_fields: list[str]
+    required_fields: list[str] = []
     resource_name: str = "MockResource"
     section: int | str = "MockResource"
     validated_data: bool = False
