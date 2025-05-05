@@ -19,6 +19,8 @@ class CommonResourceFunctions:
     def run_common_validations(self) -> list[str] | None:
         self.check_attached_resource_input_data()
         self.check_empty_input_data(self.attached_resource.input_data)
+        required_fields = self.attached_resource.required_fields
+        self.check_missing_required_fields(required_fields)
         self.check_all_cells_characters()
 
         if self.errors_count > 0:
@@ -28,6 +30,20 @@ class CommonResourceFunctions:
         if self.errors_count > 0:
             msg = "- " + "\n- ".join(self.errors)
             raise ValueError(f"Detected {self.errors_count} problem(s):\n{msg}")
+
+    def check_missing_required_fields(self, required_fields: list[str]) -> list | None:
+        current_fields = [str(fld) for fld in self.attached_resource.input_data.columns]
+        missing_required_fields = set(required_fields) - set(current_fields)
+        if missing_required_fields:
+            msg = "Missing required field(s):\n"
+            for missing_field in missing_required_fields:
+                self._remove_missing_field_to_continue_validations(missing_field)
+                self.errors_count += 1
+                msg += f"   - {missing_field}\n"
+            self.errors.append(msg)
+
+    def _remove_missing_field_to_continue_validations(self, missing_field: str) -> None:
+        self.attached_resource.required_fields.remove(missing_field)
 
     def check_all_cells_characters(self) -> list[str]:
         for label, content in self.attached_resource.input_data.items():
