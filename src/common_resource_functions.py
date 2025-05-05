@@ -21,6 +21,7 @@ class CommonResourceFunctions:
         self.check_empty_input_data(self.attached_resource.input_data)
         required_fields = self.attached_resource.required_fields
         self.check_missing_required_fields(required_fields)
+        self.check_missing_values_in_required_fields(required_fields)
         self.check_all_cells_characters()
 
         if self.errors_count > 0:
@@ -44,6 +45,32 @@ class CommonResourceFunctions:
 
     def _remove_missing_field_to_continue_validations(self, missing_field: str) -> None:
         self.attached_resource.required_fields.remove(missing_field)
+
+    def check_missing_values_in_required_fields(
+        self, required_fields: list[str]
+    ) -> list[str] | None:
+        missing_data: dict[str, list[str]] = {}
+        for field_label in required_fields:
+            for idx, value in self.attached_resource.input_data[field_label].items():
+                if value != "" or not isinstance(value, str) and value is not None:
+                    continue
+
+                human_idx = int(str(idx)) + 2  # +2: +1 for 0-idx +1 for headers row
+                error = f"Row {human_idx}"
+                if field_label not in missing_data:
+                    missing_data[field_label] = []
+                missing_data[field_label].append(error)
+
+        if not missing_data:
+            return
+
+        msg = "Missing data in mandatory fields:\n"
+        for idx, value in missing_data.items():
+            self.errors_count += 1
+            msg += f"  - Column '{idx}':\n"
+            for err in value:
+                msg += f"    - {err}\n"
+        self.errors.append(msg)
 
     def check_all_cells_characters(self) -> list[str]:
         for label, content in self.attached_resource.input_data.items():
