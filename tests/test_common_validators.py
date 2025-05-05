@@ -64,3 +64,22 @@ def test_validate_multiple_problems() -> None:
 
     output = error.value.args[0]
     assert expected == output
+
+
+def test_missing_required_fields() -> None:
+    case_section = "missing_required_fields"
+    case_required_fields = ["col_c"]
+    expected = "Detected 1 problem(s):\n- Missing required field(s):\n   - col_c\n"
+
+    resource = MockResource("mock")
+    resource.section = case_section
+    resource.required_fields = case_required_fields
+
+    validator = CommonResourceFunctions(resource)
+    importer = XlsxImporter()
+    resource.input_data = importer.load_data(TEST_FILE, case_section)
+    with pytest.raises(ValueError) as error:
+        validator.run_common_validations()
+
+    output = error.value.args[0]
+    assert expected == output
