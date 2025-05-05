@@ -51,7 +51,7 @@ def test_validate_multiple_problems() -> None:
     expected = (
         "Detected 2 problem(s):\n"
         "- Invalid character in column 'col_a' row '2'.\n"
-        "- Invalid last char: 'Trailing_space ' in column 'col_b' row '3'."
+        "- Invalid first char: ' leading space' in column 'col_b' row '3'."
     )
 
     resource = MockResource("mock")
