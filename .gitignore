@@ -178,3 +178,6 @@ cython_debug/
 tests/.secrets/*.json
 !.secrets/template_*.json
 !tests/.secrets/template_*.json
+
+# temp files
+.~*
