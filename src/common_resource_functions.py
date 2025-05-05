@@ -16,6 +16,21 @@ class CommonResourceFunctions:
         self.errors: list[str] = []
         self.errors_count: int = 0
 
+    def _base_show_data(self, data: DataFrame) -> DataFrame | None:
+        running_in_jupyter = "ipykernel" in sys.modules
+        if running_in_jupyter:
+            return self.attached_resource.input_data
+
+        opts = ["display.max_columns", None]
+        with option_context(*opts):
+            print(data.to_string())
+
+    def show_input_data(self) -> DataFrame | None:
+        return self._base_show_data(self.attached_resource.input_data)
+
+    def show_db_data(self) -> DataFrame | None:
+        return self._base_show_data(self.attached_resource.db_data)
+
     def run_common_validations(self) -> list[str] | None:
         self.check_attached_resource_input_data()
         self.check_empty_input_data(self.attached_resource.input_data)
